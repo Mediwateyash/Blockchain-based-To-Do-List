@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blockchain To-Do (MetaMask)</title>
+
+    <style>
+      /* -------- GLOBAL STYLING -------- */
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #d7e1ec, #f3f6fa);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      h1 {
+        font-size: 28px;
+        color: #222;
+        margin-top: 40px;
+        text-align: center;
+      }
+
+      p {
+        color: #555;
+        font-size: 15px;
+        text-align: center;
+        max-width: 600px;
+      }
+
+      /* -------- CONTAINER -------- */
+      .container {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        border-radius: 16px;
+        padding: 30px;
+        width: 90%;
+        max-width: 600px;
+        margin-top: 20px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .container:hover {
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      /* -------- BUTTONS -------- */
+      button {
+        background: linear-gradient(135deg, #007bff, #0056d6);
+        color: white;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 12px rgba(0, 91, 255, 0.4);
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* -------- INPUT FIELD -------- */
+      input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+        transition: border-color 0.3s;
+      }
+
+      input[type="text"]:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      /* -------- STATUS -------- */
+      #status {
+        margin-top: 12px;
+        color: #444;
+        font-style: italic;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      /* -------- TASKS SECTION -------- */
+      #tasks {
+        margin-top: 20px;
+      }
+
+      .task {
+        background: white;
+        border: 1px solid #e3e3e3;
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.3s, transform 0.2s;
+      }
+
+      .task:hover {
+        background: #f0f7ff;
+        transform: scale(1.01);
+      }
+
+      .task.completed {
+        text-decoration: line-through;
+        color: gray;
+        background: #f8f9fa;
+      }
+
+      .task button {
+        background: linear-gradient(135deg, #28a745, #1c7d32);
+        padding: 6px 10px;
+      }
+
+      .task button:hover {
+        box-shadow: 0 3px 8px rgba(40, 167, 69, 0.4);
+      }
+
+      /* -------- RESPONSIVE DESIGN -------- */
+      @media (max-width: 600px) {
+        input[type="text"] {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+        .task {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>🪙 Blockchain To-Do List (MetaMask)</h1>
+    <p>A minimal decentralized app to manage your tasks securely on the blockchain.</p>
+
+    <div class="container">
+      <div style="display:flex; justify-content:center; gap:10px; margin-bottom:16px;">
+        <button id="connectWallet">🔗 Connect Wallet</button>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+        <input id="newTask" type="text" placeholder="Write a new task..." />
+        <button id="addTask">➕ Add Task (transaction)</button>
+      </div>
+
+      <div id="status"></div>
+
+      <div id="tasks"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

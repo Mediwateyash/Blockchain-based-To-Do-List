@@ -2,23 +2,34 @@
 pragma solidity ^0.8.0;
 
 contract TodoList {
-    uint public taskCount = 0;
-
     struct Task {
-        uint id;
-        string content;
+        string text;
         bool completed;
     }
 
-    mapping(uint => Task) public tasks;
+    Task[] public tasks;
 
-    function createTask(string memory _content) public {
-        taskCount++;
-        tasks[taskCount] = Task(taskCount, _content, false);
+    event TaskCreated(uint indexed id, string text);
+    event TaskToggled(uint indexed id, bool completed);
+
+    function createTask(string calldata text) external {
+        tasks.push(Task(text, false));
+        emit TaskCreated(tasks.length - 1, text);
     }
 
-    function toggleCompleted(uint _id) public {
-        Task storage task = tasks[_id];
-        task.completed = !task.completed;
+    function toggleCompleted(uint id) external {
+        require(id < tasks.length, "Invalid id");
+        tasks[id].completed = !tasks[id].completed;
+        emit TaskToggled(id, tasks[id].completed);
+    }
+
+    function getTasksCount() external view returns (uint) {
+        return tasks.length;
+    }
+
+    function getTask(uint id) external view returns (string memory, bool) {
+        require(id < tasks.length, "Invalid id");
+        Task storage t = tasks[id];
+        return (t.text, t.completed);
     }
 }

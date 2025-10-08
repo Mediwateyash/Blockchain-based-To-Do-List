@@ -1,16 +1,15 @@
-import hre from "hardhat";
-
 async function main() {
-    const ethers = hre.ethers; // <-- get ethers from HRE
+  const [deployer] = await ethers.getSigners();
+  console.log("Deploying contracts with the account:", deployer.address);
 
-    const TodoList = await ethers.getContractFactory("/contracts/TodoList.sol:TodoList"); // contract name must match exactly
-    const todo = await TodoList.deploy();
-    await todo.deployed();
+  const Todo = await ethers.getContractFactory("TodoList");
+  const todo = await Todo.deploy();
+  await todo.deployed();
 
-    console.log("TodoList deployed to:", todo.address);
+  console.log("TodoList deployed to:", todo.address);
 }
 
 main().catch((error) => {
-    console.error(error);
-    process.exitCode = 1;
+  console.error(error);
+  process.exitCode = 1;
 });
